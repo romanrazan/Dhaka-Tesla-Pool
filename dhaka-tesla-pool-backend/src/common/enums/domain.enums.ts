@@ -1,0 +1,46 @@
+export enum UserRole {
+  PASSENGER = 'PASSENGER',
+  DRIVER = 'DRIVER',
+}
+
+export enum DhakaZone {
+  BANANI = 'BANANI',
+  GULSHAN_1 = 'GULSHAN_1',
+  GULSHAN_2 = 'GULSHAN_2',
+  MOHAKHALI = 'MOHAKHALI',
+  DHANMONDI = 'DHANMONDI',
+  MIRPUR = 'MIRPUR',
+  UTTARA = 'UTTARA',
+  FARMGATE = 'FARMGATE',
+  BASHUNDHARA = 'BASHUNDHARA',
+}
+
+export enum RideStatus {
+  REQUESTED = 'REQUESTED',
+  MATCHED = 'MATCHED',
+  ACCEPTED = 'ACCEPTED',
+  DRIVER_ARRIVED = 'DRIVER_ARRIVED',
+  STARTED = 'STARTED',
+  COMPLETED = 'COMPLETED',
+  CANCELLED = 'CANCELLED',
+}
+
+export enum PoolStatus {
+  MATCHING = 'MATCHING',
+  ACCEPTED = 'ACCEPTED',
+  DRIVER_ARRIVED = 'DRIVER_ARRIVED',
+  STARTED = 'STARTED',
+  COMPLETED = 'COMPLETED',
+  CANCELLED = 'CANCELLED',
+}
+
+export enum PaymentMethod {
+  CASH = 'CASH',
+  TESLA_PAY = 'TESLA_PAY',
+}
+
+export enum PaymentStatus {
+  PENDING = 'PENDING',
+  PAID = 'PAID',
+  FAILED = 'FAILED',
+}

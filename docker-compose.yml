@@ -1,0 +1,66 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DHAKA_POOL_DB_PASSWORD:?Set DHAKA_POOL_DB_PASSWORD in the root .env for local Docker}
+      POSTGRES_DB: dhaka_tesla_pool
+    ports:
+      - "5432:5432"
+    volumes:
+      - dhaka_tesla_pool_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d dhaka_tesla_pool"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./dhaka-tesla-pool-backend
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: ${DHAKA_POOL_DB_PASSWORD:?Set DHAKA_POOL_DB_PASSWORD in the root .env for local Docker}
+      DATABASE_NAME: dhaka_tesla_pool
+      JWT_SECRET: ${DHAKA_POOL_JWT_SECRET:?Set DHAKA_POOL_JWT_SECRET in the root .env for local Docker}
+      JWT_EXPIRES_IN: 1d
+      FRONTEND_URL: http://localhost:3000
+    ports:
+      - "4000:4000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:4000/api').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./dhaka-tesla-pool-frontend
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:4000/api
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:4000/api
+    ports:
+      - "3000:3000"
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3000').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  dhaka_tesla_pool_data:
+

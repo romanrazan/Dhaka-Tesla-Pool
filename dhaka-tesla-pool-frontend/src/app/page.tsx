@@ -1,0 +1,13 @@
+import { ArrowRight, BadgeCheck, CarFront, Gauge, LockKeyhole, MapPinned, Sparkles, UsersRound, Zap } from 'lucide-react';
+import Link from 'next/link';
+
+export default function Home() {
+  return <main className="landing">
+    <nav className="landing-nav"><Link className="brand" href="/"><span className="brand-mark"><Zap size={20} fill="currentColor" /></span><span><strong>Dhaka Tesla</strong><small>POOL</small></span></Link><div><Link href="/login">Sign in</Link><Link className="button button-primary" href="/register">Get a seat <ArrowRight size={17} /></Link></div></nav>
+    <section className="hero"><div className="hero-copy"><span className="hero-kicker"><Sparkles size={15} /> Smarter rides for a crowded city</span><h1>Share a seat.<br />Split the fare.<br /><em>Survive Dhaka traffic.</em></h1><p>One Tesla. Compatible routes. Private fares. A calmer way through the city — designed around the people already going your way.</p><div className="hero-actions"><Link className="button button-primary button-large" href="/register">Request your first ride <ArrowRight size={19} /></Link><Link className="text-link" href="/login">I’m already a rider</Link></div><div className="trust-row"><span><BadgeCheck size={17} /> Capacity protected</span><span><LockKeyhole size={17} /> Fares stay private</span></div></div>
+      <div className="hero-visual"><div className="city-lines" /><div className="route-card floating-card"><span className="route-node start" /><div><small>Pickup</small><strong>Banani</strong></div><span className="route-arrow">→</span><div><small>Drop</small><strong>Mohakhali</strong></div></div><div className="tesla-orb"><div className="orb-ring" /><CarFront size={94} strokeWidth={1.2} /><span>Bullet · 3 seats</span></div><div className="rider-card floating-card"><div className="avatar-stack"><i>N</i><i>R</i><i>S</i></div><div><strong>2 riders matched</strong><small>1 seat is still open</small></div></div></div>
+    </section>
+    <section className="how"><div><span className="eyebrow">Built for the real commute</span><h2>Pooling without the guesswork.</h2></div><div className="feature-grid"><article><span><MapPinned /></span><h3>Zone-smart matching</h3><p>Deterministic Dhaka corridors keep pooling transparent and testable.</p></article><article><span><UsersRound /></span><h3>No seat overbooking</h3><p>Database-level locking protects Bullet’s three-seat capacity under pressure.</p></article><article><span><Gauge /></span><h3>A clear live journey</h3><p>From matched to arrived to complete, every transition is visible and audited.</p></article></div></section>
+  </main>;
+}
+
